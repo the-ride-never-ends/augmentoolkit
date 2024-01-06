@@ -41,6 +41,20 @@ def special_instructions(n=1, non_axis_traits=False, non_axis_traits_only=False)
     ## NOTE You may (and are encouraged to!) add your own trait dimensions here, to make the character personalities used more accurately reflect your specific use case and preference. Since every possible combination of one trait from each row is put into the list, you will get a lot of variety with your characters for not much work.
     # NOTE Chaste and puritan characters have a tendency to be interpreted by the AI as being religious, possibly because of "puritan", even though I initially just meant for this to be the opposite of horny. I'm leaving this in as a way to counteract occasional anti-religious bias and the AI's own personality.
 
+    # Big Five Personality Traits. See: https://en.wikipedia.org/wiki/Big_Five_personality_traits
+    big_five_traits = [
+        "The character has High Conscientiousness. Conscientiousness describes a person’s ability to regulate impulse control in order to engage in goal-directed behaviors. It measures elements such as control, inhibition, and persistence of behavior. Those high in conscientiousness can be described as organized, disciplined, detail-oriented, thoughtful, and careful. They also have good impulse control, which allows them to complete tasks and achieve goals.",
+        "The character has Low Conscientiousness. Conscientiousness describes a person’s ability to regulate impulse control in order to engage in goal-directed behaviors. It measures elements such as control, inhibition, and persistence of behavior. Those low in conscientiousness may struggle with impulse control, leading to difficulty in completing tasks and fulfilling goals. They tend to be more disorganized and may dislike too much structure. They may also engage in more impulsive and careless behavior.",
+        "The character has High Agreeableness. Agreeableness refers to how people tend to treat relationships with others, and focuses on people’s orientation and interactions with others. Those high in agreeableness can be described as soft-hearted, trusting, and well-liked. They are sensitive to the needs of others and are helpful and cooperative. People regard them as trustworthy and altruistic.",
+        "The character has Low Agreeableness. Agreeableness refers to how people tend to treat relationships with others, and focuses on people’s orientation and interactions with others. Those low in agreeableness may be perceived as suspicious, manipulative, and uncooperative. They may be antagonistic when interacting with others, making them less likely to be well-liked and trusted.",
+        "The character has High Extraversion. Extraversion reflects the tendency and intensity to which someone seeks interaction with their environment, particularly socially. It encompasses the comfort and assertiveness levels of people in social situations. Those high in extraversion are generally assertive, sociable, fun-loving, and outgoing. They thrive in social situations and feel comfortable voicing their opinions. They tend to gain energy and become excited from being around others.",
+        "The character has Low Extraversion. Extraversion reflects the tendency and intensity to which someone seeks interaction with their environment, particularly socially. It encompasses the comfort and assertiveness levels of people in social situations. Those low in extraversion are often referred to as introverts. These people tend to be more reserved and quieter. They prefer listening to others rather than needing to be heard. Introverts often need periods of solitude in order to regain energy as attending social events can be very tiring for them. Of importance to note is that introverts do not necessarily dislike social events, but instead find them tiring.",
+        "The character has High Openness to Experience. Openness to experience refers to one’s willingness to try new things as well as engage in imaginative and intellectual activities. It includes the ability to “think outside of the box.” Those high in openness to experience are perceived as creative and artistic. They prefer variety and value independence. They are curious about their surroundings and enjoy traveling and learning new things.",
+        "The character has Low Openness to Experience. Openness to experience refers to one’s willingness to try new things as well as engage in imaginative and intellectual activities. It includes the ability to “think outside of the box.” Those low in openness to experience prefer routine. They are uncomfortable with change and trying new things, so they prefer the familiar over the unknown. As they are practical people, they often find it difficult to think creatively or abstractly.",
+        "The character has High Neuroticism. Neuroticism describes the overall emotional stability of an individual through how they perceive the world. It takes into account how likely a person is to interpret events as threatening or difficult. It also includes one’s propensity to experience negative emotions. Those high in neuroticism often feel anxious, insecure and self-pitying. They are often perceived as moody and irritable. They are prone to excessive sadness and low self-esteem.",
+        "The character has Low Neuroticism. Neuroticism describes the overall emotional stability of an individual through how they perceive the world. It takes into account how likely a person is to interpret events as threatening or difficult. It also includes one’s propensity to experience negative emotions. Those low in neuroticism are more likely to calm, secure and self-satisfied. They are less likely to be perceived as anxious or moody. They are more likely to have high self-esteem and remain resilient."
+    ]
+
     axis_traits = [
         [
             "The character should be chaste and puritanical.",
@@ -89,6 +103,13 @@ The character should be narcissistic."""
 
     if non_axis_traits_only:
         selected_traits = random.sample(non_axis_trait_list, 1)
+		
+    if big_five_traits:
+        # Although all 5 traits can be put onto a character card, for simplicity's sake, only 1 is selected at this time.
+        selected_traits = random.sample(big_five_traits, 1)
+        if non_axis_traits:
+            print("Warning: big_five_traits and non_axis_trait_list contain contradictory elements. Combining the two will likely confuse the LLM and produce inconsistent characters.")
+            selected_traits += random.sample(non_axis_trait_list, 1)
 
     # Return the combined string, with each sentence on a new line
     return selected_traits[0]
